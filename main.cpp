@@ -14,17 +14,57 @@
 #define HEIGHT 720
 
 // Vertices coordinates
-GLfloat vertices[] =
-    { //     COORDINATES     /        COLORS      /   TexCoord  //
-        -0.5f, 0.0f,  0.5f,  0.83f, 0.70f, 0.44f, 0.0f,  0.0f,  -0.5f, 0.0f,
-        -0.5f, 0.83f, 0.70f, 0.44f, 5.0f,  0.0f,  0.5f,  0.0f,  -0.5f, 0.83f,
-        0.70f, 0.44f, 0.0f,  0.0f,  0.5f,  0.0f,  0.5f,  0.83f, 0.70f, 0.44f,
-        5.0f,  0.0f,  0.0f,  0.8f,  0.0f,  0.92f, 0.86f, 0.76f, 2.5f,  5.0f};
+GLfloat vertices[] = {
+    -0.5f, 0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    0.0f,  0.0f, 0.0f,  -1.0f, 0.0f, // Bottom side
+    -0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    0.0f,  5.0f, 0.0f,  -1.0f, 0.0f, // Bottom side
+    0.5f,  0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    5.0f,  5.0f, 0.0f,  -1.0f, 0.0f, // Bottom side
+    0.5f,  0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    5.0f,  0.0f, 0.0f,  -1.0f, 0.0f, // Bottom side
+
+    -0.5f, 0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    0.0f,  0.0f, -0.8f, 0.5f,  0.0f, // Left Side
+    -0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    5.0f,  0.0f, -0.8f, 0.5f,  0.0f, // Left Side
+    0.0f,  0.8f, 0.0f,  0.92f, 0.86f, 0.76f,
+    2.5f,  5.0f, -0.8f, 0.5f,  0.0f, // Left Side
+
+    -0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    5.0f,  0.0f, 0.0f,  0.5f,  -0.8f, // Non-facing side
+    0.5f,  0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    0.0f,  0.0f, 0.0f,  0.5f,  -0.8f, // Non-facing side
+    0.0f,  0.8f, 0.0f,  0.92f, 0.86f, 0.76f,
+    2.5f,  5.0f, 0.0f,  0.5f,  -0.8f, // Non-facing side
+
+    0.5f,  0.0f, -0.5f, 0.83f, 0.70f, 0.44f,
+    0.0f,  0.0f, 0.8f,  0.5f,  0.0f, // Right side
+    0.5f,  0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    5.0f,  0.0f, 0.8f,  0.5f,  0.0f, // Right side
+    0.0f,  0.8f, 0.0f,  0.92f, 0.86f, 0.76f,
+    2.5f,  5.0f, 0.8f,  0.5f,  0.0f, // Right side
+
+    0.5f,  0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    5.0f,  0.0f, 0.0f,  0.5f,  0.8f, // Facing side
+    -0.5f, 0.0f, 0.5f,  0.83f, 0.70f, 0.44f,
+    0.0f,  0.0f, 0.0f,  0.5f,  0.8f, // Facing side
+    0.0f,  0.8f, 0.0f,  0.92f, 0.86f, 0.76f,
+    2.5f,  5.0f, 0.0f,  0.5f,  0.8f // Facing side
+};
 
 // Indices for vertices order
-GLuint indices[] = {0, 1, 2, 0, 2, 3, 0, 1, 4, 1, 2, 4, 2, 3, 4, 3, 0, 4};
+GLuint indices[] = {
+    0,  1,  2,  // Bottom side
+    0,  2,  3,  // Bottom side
+    4,  6,  5,  // Left side
+    7,  9,  8,  // Non-facing side
+    10, 12, 11, // Right side
+    13, 15, 14  // Facing side
+};
 
-GLfloat lightVertices[] = { //     COORDINATES     //
+GLfloat lightVertices[] = {
+    //     COORDINATES     //
     -0.1f, -0.1f, 0.1f,  -0.1f, -0.1f, -0.1f, 0.1f, -0.1f,
     -0.1f, 0.1f,  -0.1f, 0.1f,  -0.1f, 0.1f,  0.1f, -0.1f,
     0.1f,  -0.1f, 0.1f,  0.1f,  -0.1f, 0.1f,  0.1f, 0.1f};
@@ -60,9 +100,10 @@ int main() {
   ebo.Bind();
   ebo.BufferData(indices, sizeof(indices), GL_STATIC_DRAW);
 
-  vao.DataAttribute(0, 3, 8, 0);
-  vao.DataAttribute(1, 2, 8, 6);
-  vao.DataAttribute(2, 3, 8, 3);
+  vao.DataAttribute(0, 3, 11, 0);
+  vao.DataAttribute(1, 3, 11, 3);
+  vao.DataAttribute(2, 2, 11, 6);
+  vao.DataAttribute(3, 3, 11, 8);
 
   vbo.Unbind();
   vao.Unbind();
@@ -88,12 +129,16 @@ int main() {
   vaoLight.Unbind();
   eboLight.Unbind();
 
-  glm::vec3 lightPos = glm::vec3(-1.0f, 1.0f, -0.5f);
+  glm::vec3 lightPos = glm::vec3(0.25f, 0.7f, 0.3f);
   glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
-  Texture texture("images/brick.png", GL_TEXTURE_2D, GL_RGBA);
+  Texture texture("images/planks.png", GL_TEXTURE_2D, GL_RGBA);
 
   texture.TextureData(defaultShader.shaderProgram, "tex0", 0);
+
+  Texture textureSpec("images/planksSpec.png", GL_TEXTURE_2D, GL_RED);
+
+  textureSpec.TextureData(defaultShader.shaderProgram, "texSpec", 1);
 
   float rotation = 0.5;
   double prevTime = glfwGetTime();
@@ -118,10 +163,11 @@ int main() {
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, modelPos);
-    model =
-        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    //   model =
+    //        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f,
+    //        0.0f));
 
-    camera.Inputs(window, 0.2f);
+    camera.Inputs(window, 0.5f);
     camera.updateMatrix(0.1f, 100.0f);
 
     defaultShader.Activate();
@@ -133,7 +179,13 @@ int main() {
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniform4f(glGetUniformLocation(defaultShader.shaderProgram, "lightColor"),
                 lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "lightPos"),
+                lightPos.x, lightPos.y, lightPos.z);
+    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "cameraPos"),
+                camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+
     texture.DrawTexture(0);
+    textureSpec.DrawTexture(1);
     vao.Bind();
 
     glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT,
@@ -166,6 +218,7 @@ int main() {
   vboLight.Delete();
   eboLight.Delete();
   texture.DeleteTexture();
+  textureSpec.DeleteTexture();
   glfwTerminate();
   return EXIT_SUCCESS;
 }
