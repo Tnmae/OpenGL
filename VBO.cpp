@@ -2,8 +2,9 @@
 
 VBO::VBO() { glGenBuffers(1, &ID); };
 
-void VBO::BufferData(GLfloat *vertices, GLsizeiptr size, GLenum usage) {
-  glBufferData(GL_ARRAY_BUFFER, size, vertices, usage);
+void VBO::BufferData(std::vector<Vertex> &vertices, GLenum usage) {
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex),
+               vertices.data(), usage);
 }
 
 void VBO::Bind() { glBindBuffer(GL_ARRAY_BUFFER, ID); }

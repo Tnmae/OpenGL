@@ -4,8 +4,9 @@ EBO::EBO() { glGenBuffers(1, &ID); }
 
 void EBO::Bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID); }
 
-void EBO::BufferData(GLuint *indices, GLsizeiptr size, GLenum usage) {
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, usage);
+void EBO::BufferData(std::vector<GLuint> &indices, GLenum usage) {
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint),
+               indices.data(), usage);
 }
 
 void EBO::Unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }

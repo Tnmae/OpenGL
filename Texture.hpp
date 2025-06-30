@@ -12,7 +12,8 @@ unsigned char *loadImage(const char *fileName);
 
 class Texture {
 public:
-  Texture(std::string imagePath, GLenum type, GLenum format);
+  std::string type;
+  Texture(std::string imagePath, std::string type, GLenum format);
   void TextureData(GLuint shaderProgram, std::string uniformName, GLint unit);
   void DrawTexture(GLint unit);
   void DeleteTexture();
