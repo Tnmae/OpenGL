@@ -13,12 +13,11 @@ unsigned char *loadImage(const char *fileName);
 class Texture {
 public:
   std::string type;
-  Texture(std::string imagePath, std::string type, GLenum format);
+  std::string path;
+  Texture(std::string fileName, std::string type);
   void TextureData(GLuint shaderProgram, std::string uniformName, GLint unit);
   void DrawTexture(GLint unit);
   void DeleteTexture();
-
-private:
   GLuint texture;
 };
 

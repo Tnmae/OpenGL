@@ -3,7 +3,6 @@
 in vec2 texCoord;
 in vec3 Normal;
 in vec3 crntPos;
-in vec3 color;
 
 out vec4 FragColor;
 
@@ -62,7 +61,7 @@ vec4 spotLight() {
     float diffuse = max(dot(lightDirection, normal), 0.0f);
 
     float specularLight = 0.50f;
-    vec3 viewDirection = vec3(cameraPos - crntPos);
+    vec3 viewDirection = normalize(cameraPos - crntPos);
     vec3 reflectionDirection = reflect(-lightDirection, normal);
     float specAmount = pow(max(dot(reflectionDirection, viewDirection), 0.0f), 16);
     float specular = specAmount * specularLight;
@@ -74,5 +73,5 @@ vec4 spotLight() {
 }
 
 void main() {
-    FragColor = pointLight();
+    FragColor = spotLight() + pointLight();
 }

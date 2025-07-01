@@ -19,7 +19,7 @@ public:
   Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices,
        std::vector<Texture> &texture);
 
-  void Draw(GLuint shaderProgram, Camera &camera);
+  void Draw(GLuint shaderProgram);
 
 private:
 };

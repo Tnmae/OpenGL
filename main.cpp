@@ -1,5 +1,7 @@
 #include "Mesh.hpp"
+#include "Model.hpp"
 #include "shader.hpp"
+#include <assimp/mesh.h>
 
 #define WIDTH 1080
 #define HEIGHT 720
@@ -9,13 +11,13 @@ Vertex vertices[] =
     { //               COORDINATES           /            COLORS          /
       //               NORMALS         /       TEXTURE COORDINATES    //
         Vertex{glm::vec3(-1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f),
-               glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+               glm::vec2(0.0f, 0.0f)},
         Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f),
-               glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+               glm::vec2(0.0f, 1.0f)},
         Vertex{glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f),
-               glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
+               glm::vec2(1.0f, 1.0f)},
         Vertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f),
-               glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}};
+               glm::vec2(1.0f, 0.0f)}};
 
 // Indices for vertices order
 GLuint indices[] = {0, 1, 2, 0, 2, 3};
@@ -48,8 +50,8 @@ int main() {
   gladLoadGL();
 
   Shader defaultShader("default.vert", "default.frag");
-  Texture textures[]{Texture("images/planks.png", "diffuse", GL_RGBA),
-                     Texture("images/planksSpec.png", "specular", GL_RED)};
+  Texture textures[]{Texture("images/planks.png", "diffuse"),
+                     Texture("images/planksSpec.png", "specular")};
 
   std::vector<Vertex> vert(vertices,
                            vertices + sizeof(vertices) / sizeof(Vertex));
@@ -66,6 +68,10 @@ int main() {
       lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 
   Mesh light(lightVert, lightInd, tex);
+
+  Shader modelShader("model.vert", "model.frag");
+
+  Model ourModel("model/backpack.obj");
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
@@ -111,6 +117,8 @@ int main() {
                 lightColor.x, lightColor.y, lightColor.z, lightColor.w);
     glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "lightPos"),
                 lightPos.x, lightPos.y, lightPos.z);
+    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "cameraPos"),
+                camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
     lightShader.Activate();
 
@@ -123,8 +131,15 @@ int main() {
     glUniform4f(glGetUniformLocation(lightShader.shaderProgram, "lightColor"),
                 lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 
-    floor.Draw(defaultShader.shaderProgram, camera);
-    light.Draw(lightShader.shaderProgram, camera);
+    floor.Draw(defaultShader.shaderProgram);
+    light.Draw(lightShader.shaderProgram);
+
+    modelShader.Activate();
+
+    camera.SendMatrix(modelShader.shaderProgram, "view");
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(model));
+    ourModel.Draw(modelShader);
 
     glfwSwapBuffers(window);
   }
