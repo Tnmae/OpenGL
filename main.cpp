@@ -49,7 +49,7 @@ int main() {
 
   gladLoadGL();
 
-  Shader defaultShader("default.vert", "default.frag");
+  // Shader defaultShader("default.vert", "default.frag");
   Texture textures[]{Texture("images/planks.png", "diffuse"),
                      Texture("images/planksSpec.png", "specular")};
 
@@ -75,7 +75,7 @@ int main() {
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  glm::vec3 lightPos = glm::vec3(0.25f, 0.7f, 0.3f);
+  glm::vec3 lightPos = glm::vec3(0.55f, 1.5f, 0.3f);
   glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
   float rotation = 0.5;
@@ -107,18 +107,21 @@ int main() {
     camera.Inputs(window, 0.5f);
     camera.updateMatrix(0.1f, 100.0f);
 
-    defaultShader.Activate();
+    // defaultShader.Activate();
 
-    camera.SendMatrix(defaultShader.shaderProgram, "camMatrix");
-    GLuint modelLoc =
-        glGetUniformLocation(defaultShader.shaderProgram, "model");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniform4f(glGetUniformLocation(defaultShader.shaderProgram, "lightColor"),
-                lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "lightPos"),
-                lightPos.x, lightPos.y, lightPos.z);
-    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "cameraPos"),
-                camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+    // camera.SendMatrix(defaultShader.shaderProgram, "camMatrix");
+    // GLuint modelLoc =
+    //     glGetUniformLocation(defaultShader.shaderProgram, "model");
+    // glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    // glUniform4f(glGetUniformLocation(defaultShader.shaderProgram,
+    // "lightColor"),
+    //            lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+    // glUniform3f(glGetUniformLocation(defaultShader.shaderProgram,
+    // "lightPos"),
+    //            lightPos.x, lightPos.y, lightPos.z);
+    // glUniform3f(glGetUniformLocation(defaultShader.shaderProgram,
+    // "cameraPos"),
+    //            camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
     lightShader.Activate();
 
@@ -131,7 +134,7 @@ int main() {
     glUniform4f(glGetUniformLocation(lightShader.shaderProgram, "lightColor"),
                 lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 
-    floor.Draw(defaultShader.shaderProgram);
+    // floor.Draw(defaultShader.shaderProgram);
     light.Draw(lightShader.shaderProgram);
 
     modelShader.Activate();
@@ -145,8 +148,9 @@ int main() {
   }
 
   glfwDestroyWindow(window);
-  defaultShader.Delete();
+  // defaultShader.Delete();
   lightShader.Delete();
+  modelShader.Delete();
   glfwTerminate();
   return EXIT_SUCCESS;
 }
