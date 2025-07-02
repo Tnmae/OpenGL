@@ -75,7 +75,7 @@ int main() {
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  glm::vec3 lightPos = glm::vec3(0.55f, 1.5f, 0.3f);
+  glm::vec3 lightPos = glm::vec3(1.5f, 1.5f, 0.3f);
   glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
   float rotation = 0.5;
@@ -139,6 +139,12 @@ int main() {
 
     modelShader.Activate();
 
+    glUniform3f(glGetUniformLocation(modelShader.shaderProgram, "lightPos"),
+                lightPos.x, lightPos.y, lightPos.z);
+    glUniform3f(glGetUniformLocation(modelShader.shaderProgram, "cameraPos"),
+                camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+    glUniform4f(glGetUniformLocation(modelShader.shaderProgram, "lightColor"),
+                lightColor.x, lightColor.y, lightColor.z, lightColor.w);
     camera.SendMatrix(modelShader.shaderProgram, "view");
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
                        1, GL_FALSE, glm::value_ptr(model));
@@ -153,4 +159,4 @@ int main() {
   modelShader.Delete();
   glfwTerminate();
   return EXIT_SUCCESS;
-}
+};
