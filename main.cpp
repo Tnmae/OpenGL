@@ -23,14 +23,14 @@ Vertex vertices[] =
 GLuint indices[] = {0, 1, 2, 0, 2, 3};
 
 Vertex lightVertices[] = { //     COORDINATES     //
-    Vertex{glm::vec3(-0.1f, -0.1f, 0.1f)},
-    Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
-    Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
-    Vertex{glm::vec3(0.1f, -0.1f, 0.1f)},
-    Vertex{glm::vec3(-0.1f, 0.1f, 0.1f)},
-    Vertex{glm::vec3(-0.1f, 0.1f, -0.1f)},
-    Vertex{glm::vec3(0.1f, 0.1f, -0.1f)},
-    Vertex{glm::vec3(0.1f, 0.1f, 0.1f)}};
+    Vertex{glm::vec3(-1.5f, -1.5f, 1.5f)},
+    Vertex{glm::vec3(-1.5f, -1.5f, -1.5f)},
+    Vertex{glm::vec3(1.5f, -1.5f, -1.5f)},
+    Vertex{glm::vec3(1.5f, -1.5f, 1.5f)},
+    Vertex{glm::vec3(-1.5f, 1.5f, 1.5f)},
+    Vertex{glm::vec3(-1.5f, 1.5f, -1.5f)},
+    Vertex{glm::vec3(1.5f, 1.5f, -1.5f)},
+    Vertex{glm::vec3(1.5f, 1.5f, 1.5f)}};
 
 GLuint lightIndices[] = {0, 1, 2, 0, 2, 3, 0, 4, 7, 0, 7, 3, 3, 7, 6, 3, 6, 2,
                          2, 6, 5, 2, 5, 1, 1, 5, 4, 1, 4, 0, 4, 5, 6, 4, 6, 7};
@@ -71,11 +71,11 @@ int main() {
 
   Shader modelShader("model.vert", "model.frag");
 
-  Model ourModel("model/backpack.obj");
+  Model ourModel("model/sword/scene.gltf");
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  glm::vec3 lightPos = glm::vec3(1.5f, 1.5f, 0.3f);
+  glm::vec3 lightPos = glm::vec3(0.0f, 5.0f, 0.0f);
   glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
   float rotation = 0.5;
@@ -83,9 +83,9 @@ int main() {
 
   glEnable(GL_DEPTH_TEST);
 
-  Camera camera(glm::vec3(0.0f, 0.3f, 2.0f));
+  Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
-  glm::vec3 modelPos = glm::vec3(0.0f, 0.2f, -0.5f);
+  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -0.5f);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -100,9 +100,12 @@ int main() {
 
     glm::mat4 model = glm::mat4(1.0f);
 
-    model = glm::translate(model, modelPos);
+    model = glm::rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+
     model =
-        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // model = glm::translate(model, modelPos);
 
     camera.Inputs(window, 0.5f);
     camera.updateMatrix(0.1f, 100.0f);
