@@ -53,9 +53,9 @@ int main() {
   Shader defaultShader("default.vert", "default.frag");
 
   std::vector<Texture> tex = {Texture("images/earth2048.bmp", "diffuse")};
-  Sphere sphere(2.0f, 18, 36, tex);
-  //  Texture textures[] = {Texture("images/planks.png", "diffuse"),
-  //                   Texture("images/planksSpec.png", "specular")};
+  // Sphere sphere(2.0f, 24, 72, tex);
+  //   Texture textures[] = {Texture("images/planks.png", "diffuse"),
+  //                    Texture("images/planksSpec.png", "specular")};
 
   //  std::vector<Vertex> vert(vertices,
   //                           vertices + sizeof(vertices) / sizeof(Vertex));
@@ -75,7 +75,7 @@ int main() {
 
   Shader modelShader("model.vert", "model.frag");
 
-  Model ourModel("model/sword/scene.gltf");
+  Model ourModel("model/bunny/scene.gltf");
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
@@ -89,7 +89,7 @@ int main() {
 
   Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
-  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -4.5f);
+  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -0.5f);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -128,7 +128,7 @@ int main() {
     glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "cameraPos"),
                 camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
-    sphere.Draw(defaultShader.shaderProgram);
+    // sphere.Draw(defaultShader.shaderProgram);
 
     lightShader.Activate();
 
@@ -155,7 +155,7 @@ int main() {
     camera.SendMatrix(modelShader.shaderProgram, "view");
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
                        1, GL_FALSE, glm::value_ptr(model));
-    //    ourModel.Draw(modelShader);
+    ourModel.Draw(modelShader);
 
     glfwSwapBuffers(window);
   }

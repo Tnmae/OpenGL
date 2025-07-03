@@ -16,7 +16,7 @@ vec4 pointLight() {
     vec3 vec = lightPos - crntPos;
     float distance = length(vec);
     float a = 0.01f;
-    float b = 0.50f;
+    float b = 0.05f;
     float inten = 1 / (a * distance * distance + b * distance);
 
     float ambient = 0.20f;
@@ -79,5 +79,5 @@ vec4 spotLight() {
 }
 
 void main() {
-    FragColor = pointLight();
+    FragColor = pointLight() + directLight();
 }

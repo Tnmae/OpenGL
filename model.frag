@@ -14,8 +14,8 @@ uniform vec4 lightColor;
 vec4 pointLight() {
     vec3 vec = lightPos - crntPos;
     float distance = length(vec);
-    float a = 0.30f;
-    float b = 0.70f;
+    float a = 0.01f;
+    float b = 0.05f;
     float inten = 1 / (a * distance * distance + b * distance);
 
     float ambient = 0.20f;
@@ -30,7 +30,7 @@ vec4 pointLight() {
     float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16);
     float specular = specularLight * specAmount;
 
-    return (texture(diffuse0, TexCoords) * (distance * inten + ambient) + texture(specular0, TexCoords).r * specular * inten) * lightColor;
+    return (texture(diffuse0, TexCoords) * (diffuse * inten + ambient) + texture(specular0, TexCoords).r * specular * inten) * lightColor;
 }
 
 vec4 directLight() {
