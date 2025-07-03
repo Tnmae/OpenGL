@@ -1,5 +1,6 @@
 #include "Mesh.hpp"
 #include "Model.hpp"
+#include "Sphere.hpp"
 #include "shader.hpp"
 #include <assimp/mesh.h>
 
@@ -49,17 +50,20 @@ int main() {
 
   gladLoadGL();
 
-  // Shader defaultShader("default.vert", "default.frag");
-  Texture textures[]{Texture("images/planks.png", "diffuse"),
-                     Texture("images/planksSpec.png", "specular")};
+  Shader defaultShader("default.vert", "default.frag");
 
-  std::vector<Vertex> vert(vertices,
-                           vertices + sizeof(vertices) / sizeof(Vertex));
-  std::vector<GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
-  std::vector<Texture> tex(textures,
-                           textures + sizeof(textures) / sizeof(Texture));
+  std::vector<Texture> tex = {Texture("images/earth2048.bmp", "diffuse")};
+  Sphere sphere(2.0f, 18, 36, tex);
+  //  Texture textures[] = {Texture("images/planks.png", "diffuse"),
+  //                   Texture("images/planksSpec.png", "specular")};
 
-  Mesh floor(vert, ind, tex);
+  //  std::vector<Vertex> vert(vertices,
+  //                           vertices + sizeof(vertices) / sizeof(Vertex));
+  //  std::vector<GLuint> ind(indices, indices + sizeof(indices) /
+  //  sizeof(GLuint)); std::vector<Texture> tex(textures,
+  //                          textures + sizeof(textures) / sizeof(Texture));
+
+  //  Mesh floor(vert, ind, tex);
 
   Shader lightShader("light.vert", "light.frag");
   std::vector<Vertex> lightVert(
@@ -85,7 +89,7 @@ int main() {
 
   Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
-  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -0.5f);
+  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -4.5f);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -100,31 +104,31 @@ int main() {
 
     glm::mat4 model = glm::mat4(1.0f);
 
-    model = glm::rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //    model = glm::rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+    model = glm::translate(model, modelPos);
     model =
-        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
 
     // model = glm::translate(model, modelPos);
 
     camera.Inputs(window, 0.5f);
     camera.updateMatrix(0.1f, 100.0f);
 
-    // defaultShader.Activate();
+    defaultShader.Activate();
 
-    // camera.SendMatrix(defaultShader.shaderProgram, "camMatrix");
-    // GLuint modelLoc =
-    //     glGetUniformLocation(defaultShader.shaderProgram, "model");
-    // glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    // glUniform4f(glGetUniformLocation(defaultShader.shaderProgram,
-    // "lightColor"),
-    //            lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-    // glUniform3f(glGetUniformLocation(defaultShader.shaderProgram,
-    // "lightPos"),
-    //            lightPos.x, lightPos.y, lightPos.z);
-    // glUniform3f(glGetUniformLocation(defaultShader.shaderProgram,
-    // "cameraPos"),
-    //            camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+    camera.SendMatrix(defaultShader.shaderProgram, "camMatrix");
+    GLuint modelLoc =
+        glGetUniformLocation(defaultShader.shaderProgram, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniform4f(glGetUniformLocation(defaultShader.shaderProgram, "lightColor"),
+                lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "lightPos"),
+                lightPos.x, lightPos.y, lightPos.z);
+    glUniform3f(glGetUniformLocation(defaultShader.shaderProgram, "cameraPos"),
+                camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+
+    sphere.Draw(defaultShader.shaderProgram);
 
     lightShader.Activate();
 
@@ -151,7 +155,7 @@ int main() {
     camera.SendMatrix(modelShader.shaderProgram, "view");
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
                        1, GL_FALSE, glm::value_ptr(model));
-    ourModel.Draw(modelShader);
+    //    ourModel.Draw(modelShader);
 
     glfwSwapBuffers(window);
   }
