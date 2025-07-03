@@ -58,7 +58,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
       ver.x = mesh->mTextureCoords[0][i].x;
       ver.y = mesh->mTextureCoords[0][i].y;
 
-      vertex.texUV = ver;
+      vertex.texUV = glm::vec2(ver.x, ver.y);
     } else {
       vertex.texUV = glm::vec2(0.0f, 0.0f);
     }

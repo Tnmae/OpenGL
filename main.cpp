@@ -75,25 +75,28 @@ int main() {
 
   Shader modelShader("model.vert", "model.frag");
 
-  Model ourModel("model/bunny/scene.gltf");
+  Model ourModel("model/Tree/Tree.obj");
+
+  Model scape("model/ground/scene.gltf");
 
   glViewport(0, 0, WIDTH, HEIGHT);
 
-  glm::vec3 lightPos = glm::vec3(0.0f, 5.0f, 0.0f);
+  glm::vec3 lightPos = glm::vec3(0.0f, 15.0f, 0.0f);
   glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
   float rotation = 0.5;
   double prevTime = glfwGetTime();
 
   glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
 
-  Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
+  Camera camera(glm::vec3(0.0f, 3.0f, 0.0f));
 
-  glm::vec3 modelPos = glm::vec3(0.0f, 0.0f, -0.5f);
+  glm::vec3 modelPos = glm::vec3(0.0f, 1.6f, -6.5f);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.85f, 0.85f, 0.90f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     double crntTime = glfwGetTime();
@@ -101,14 +104,15 @@ int main() {
       rotation += 0.5;
       prevTime = crntTime;
     }
-
     glm::mat4 model = glm::mat4(1.0f);
 
+    glm::mat4 tree = glm::mat4(1.0f);
     //    model = glm::rotate(glm::radians(90.f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    model = glm::translate(model, modelPos);
-    model =
-        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+    tree = glm::translate(tree, modelPos);
+    //    model =
+    //        glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f,
+    //        0.0f));
 
     // model = glm::translate(model, modelPos);
 
@@ -154,8 +158,11 @@ int main() {
                 lightColor.x, lightColor.y, lightColor.z, lightColor.w);
     camera.SendMatrix(modelShader.shaderProgram, "view");
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
-                       1, GL_FALSE, glm::value_ptr(model));
+                       1, GL_FALSE, glm::value_ptr(tree));
     ourModel.Draw(modelShader);
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(model));
+    scape.Draw(modelShader);
 
     glfwSwapBuffers(window);
   }
