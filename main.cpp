@@ -160,6 +160,34 @@ int main() {
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
                        1, GL_FALSE, glm::value_ptr(tree));
     ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(2.3f, 1.6f, -6.5f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 1.6f, -5.0f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(-1.8f, 1.6f, 9.0f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(-2.4f, 1.6f, -3.4f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(-3.8f, 1.1f, -3.7f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(-1.1f, 1.4f, -7.8f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
+    tree = glm::translate(glm::mat4(1.0f), glm::vec3(5.4f, 1.3f, -2.8f));
+    glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
+                       1, GL_FALSE, glm::value_ptr(tree));
+    ourModel.Draw(modelShader);
     glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgram, "model"),
                        1, GL_FALSE, glm::value_ptr(model));
     scape.Draw(modelShader);
@@ -171,6 +199,7 @@ int main() {
   // defaultShader.Delete();
   lightShader.Delete();
   modelShader.Delete();
+
   glfwTerminate();
   return EXIT_SUCCESS;
 };

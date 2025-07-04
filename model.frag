@@ -38,13 +38,16 @@ vec4 directLight() {
     vec3 normal = normalize(Normal);
     vec3 lightDirection = normalize(vec3(1.0f, 1.0f, 0.0f));
 
-    float diffuse = max(dot(normal, lightDirection), 0.0f);
+    float diffuse = max(abs(dot(normal, lightDirection)), 0.0f);
 
     float specularLight = 0.50f;
     vec3 viewDirection = normalize(cameraPos - crntPos);
     vec3 reflectionDirection = reflect(-lightDirection, normal);
     float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16);
     float specular = specularLight * specAmount;
+
+    if (texture(diffuse0, TexCoords).a < 0.1)
+        discard;
 
     return (texture(diffuse0, TexCoords) * (diffuse + ambient) + texture(specular0, TexCoords).r * specular) * lightColor;
 }
@@ -87,5 +90,7 @@ float logisticDepth(float depth, float steepness, float offset) {
 void main()
 {
     float depth = logisticDepth(gl_FragCoord.z, 0.5f, 5.0f);
-    FragColor = directLight() * (1.0f - depth) + vec4(depth * vec3(0.85f, 0.85f, 0.90f), 1.0f);
+    FragColor = directLight()
+            * (1.0f - depth) + vec4(depth * vec3(0.85f, 0.85f, 0.90f), 1.0f);
+    //for fog effect
 }
