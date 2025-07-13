@@ -1,7 +1,7 @@
-#include "Mesh.hpp"
-#include "Model.hpp"
-#include "Sphere.hpp"
-#include "shader.hpp"
+#include "../include/Mesh.hpp"
+#include "../include/Model.hpp"
+#include "../include/Sphere.hpp"
+#include "../include/shader.hpp"
 #include <assimp/mesh.h>
 
 #define WIDTH 1080
@@ -50,9 +50,11 @@ int main() {
 
   gladLoadGL();
 
-  Shader defaultShader("default.vert", "default.frag");
+  Shader defaultShader("../resources/shaders/default.vert",
+                       "../resources/shaders/default.frag");
 
-  std::vector<Texture> tex = {Texture("images/earth2048.bmp", "diffuse")};
+  std::vector<Texture> tex = {
+      Texture("../resources/textures/earth2048.bmp", "diffuse")};
   // Sphere sphere(2.0f, 24, 72, tex);
   //   Texture textures[] = {Texture("images/planks.png", "diffuse"),
   //                    Texture("images/planksSpec.png", "specular")};
@@ -65,7 +67,8 @@ int main() {
 
   //  Mesh floor(vert, ind, tex);
 
-  Shader lightShader("light.vert", "light.frag");
+  Shader lightShader("../resources/shaders/light.vert",
+                     "../resources/shaders/light.frag");
   std::vector<Vertex> lightVert(
       lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
   std::vector<GLuint> lightInd(
@@ -73,11 +76,12 @@ int main() {
 
   Mesh light(lightVert, lightInd, tex);
 
-  Shader modelShader("model.vert", "model.frag");
+  Shader modelShader("../resources/shaders/model.vert",
+                     "../resources/shaders/model.frag");
 
-  Model ourModel("model/Tree/Tree.obj");
+  Model ourModel("../resources/models/Tree/Tree.obj");
 
-  Model scape("model/ground/scene.gltf");
+  Model scape("../resources/models/ground/scene.gltf");
 
   glViewport(0, 0, WIDTH, HEIGHT);
 

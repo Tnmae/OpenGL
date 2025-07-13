@@ -1,9 +1,9 @@
 #ifndef VAO_HPP
 #define VAO_HPP
 
+#include "../lib/glad/glad.h"
 #include "EBO.hpp"
 #include "VBO.hpp"
-#include "glad/glad.h"
 #include <iostream>
 #include <string>
 

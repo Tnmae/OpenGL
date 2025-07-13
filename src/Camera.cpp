@@ -1,4 +1,4 @@
-#include "Camera.hpp"
+#include "../include/Camera.hpp"
 
 Camera::Camera(glm::vec3 cameraPos) { Camera::cameraPos = cameraPos; }
 

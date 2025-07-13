@@ -1,4 +1,4 @@
-#include "Sphere.hpp"
+#include "../include/Sphere.hpp"
 
 Sphere::Sphere(GLfloat radius, GLuint stackCount, GLuint sectorCount,
                std::vector<Texture> &textures) {

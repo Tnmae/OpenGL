@@ -1,4 +1,4 @@
-#include "EBO.hpp"
+#include "../include/EBO.hpp"
 
 EBO::EBO() { glGenBuffers(1, &ID); }
 

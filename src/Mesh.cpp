@@ -1,5 +1,5 @@
-#include "Mesh.hpp"
-#include "glad/glad.h"
+#include "../include/Mesh.hpp"
+#include "../lib/glad/glad.h"
 
 Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices,
            std::vector<Texture> &texture) {

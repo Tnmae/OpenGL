@@ -1,9 +1,9 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+#include "../lib/glad/glad.h"
 #include "Mesh.hpp"
 #include "Texture.hpp"
-#include "glad/glad.h"
 #include "shader.hpp"
 #include <GLFW/glfw3.h>
 #include <cmath>

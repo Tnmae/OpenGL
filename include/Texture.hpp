@@ -1,12 +1,12 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
-#include "glad/glad.h"
+#include "../lib/glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <string>
 
-#include "stb/stb_image.h"
+#include "../include/stb_image.h"
 
 unsigned char *loadImage(const char *fileName);
 

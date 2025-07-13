@@ -1,4 +1,4 @@
-#include "Texture.hpp"
+#include "../include/Texture.hpp"
 
 unsigned char *loadImage(std::string fileName, int &width, int &height,
                          int &channels) {
