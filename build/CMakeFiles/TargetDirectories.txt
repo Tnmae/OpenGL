@@ -1,0 +1,3 @@
+/home/tanmay/Documents/cpp/GL_Con/build/CMakeFiles/OpenGLProject.dir
+/home/tanmay/Documents/cpp/GL_Con/build/CMakeFiles/edit_cache.dir
+/home/tanmay/Documents/cpp/GL_Con/build/CMakeFiles/rebuild_cache.dir
