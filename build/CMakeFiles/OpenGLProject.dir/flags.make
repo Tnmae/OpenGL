@@ -13,5 +13,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/tanmay/Documents/cpp/GL_Con/include -I/home/tanmay/Documents/cpp/GL_Con/lib/glad
 
-CXX_FLAGS = -std=gnu++20
+CXX_FLAGS = -std=gnu++17
 

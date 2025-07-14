@@ -63,7 +63,7 @@ void Camera::Inputs(GLFWwindow *window, GLfloat sensitivity) {
                     glm::normalize(glm::cross(Orientation, Up)));
 
     // Decides whether or not the next vertical Orientation is legal or not
-    if (abs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <=
+    if (fabs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <=
         glm::radians(85.0f)) {
       Orientation = newOrientation;
     }
